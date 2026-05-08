@@ -28,7 +28,7 @@ return {
 	ref = Node.REF_PROP,
 
 	create = create,
-	-- fragment = Node.createFragmentNode -- fragment feature is incomplete
+	fragment = Node.createFragmentNode,
 	on = on,
 	mount = mount,
 
