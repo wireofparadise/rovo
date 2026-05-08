@@ -24,6 +24,10 @@ edit_uri: edit/main/docs/
 
 nav:
   - Introduction: index.md
+  
+  - Tutorials:
+    - Installation: tutorials/installation.md
+    - Getting started: tutorials/getting-started.md
 
 extra:
   version:

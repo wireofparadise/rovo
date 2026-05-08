@@ -18,21 +18,24 @@ local function createNode(className: string, props: Types.Props?): Types.Node
 	}
 end
 
-local function createComponentNode(component: Types.Component, props: Types.Props?): Types.Node
-	local implicitProps = props or {}
-	local children = implicitProps[CHILDREN_PROP] or {}
-	implicitProps[CHILDREN_PROP] = nil
+local function createComponentNode<T>(component: Types.Component<T>, props: Types.Props & T): Types.Node
+	if typeof(props) ~= "table" then
+		error("expected 'props' to be of type 'table'")
+	end
+
+	local children = (props[CHILDREN_PROP] or {}) :: Types.Array<Types.Node>
+	props[CHILDREN_PROP] = nil
 
 	return {
 		className = COMPONENT_CNAME,
-		props = { component = component, props = implicitProps },
+		props = { component = component, props = props },
 		children = children,
 	}
 end
 
 local function createFragmentNode(children: Types.Array<Types.Node>): Types.Node
 	return {
-		className = COMPONENT_CNAME,
+		className = FRAGMENT_CNAME,
 		props = {},
 		children = children,
 	}
