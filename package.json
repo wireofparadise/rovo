@@ -15,12 +15,12 @@
         "url": "https://github.com/wireofparadise/rovo/issues"
     },
     "license": "MIT",
-    "main": "./lib/init.luau",
-    "types": "./lib/init.d.ts",
+    "main": "./src/init.luau",
+    "types": "./src/init.d.ts",
     "files": [
-        "lib/**/*.lua",
-        "lib/**/*.luau",
-        "lib/**/*.d.ts",
+        "src/**/*.lua",
+        "src/**/*.luau",
+        "src/**/*.d.ts",
         "LICENSE",
         "README.md"
     ]
