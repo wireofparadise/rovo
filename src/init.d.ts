@@ -5,13 +5,13 @@ export declare interface Props {
     [Rovo.ref]?: Ref<any>;
 }
 
-export declare interface Node {
+export declare interface Node<T extends Props = Props> {
     className: string;
-    props: Props;
+    props: T;
     children: Node[];
 }
 
-export type Component = (props?: Props) => Node
+export type Component<T extends Props> = (props: T) => Node
 
 export interface Ref<T> {
     current: T;
@@ -21,7 +21,7 @@ export declare const Rovo: {
     children: string;
     ref: string;
 
-    create(className: string | Component, props?: Props): Node;
+    create<T extends Props>(className: string | Component<T>, props: T): Node;
     on(event: string): string;
     mount(node: Node, parent: Instance): void;
 

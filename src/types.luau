@@ -11,7 +11,7 @@ export type Node = {
 	children: Array<Node>,
 }
 
-export type Component = (props: Props) -> Node
+export type Component<T> = (props: Props & T) -> Node
 
 export type Fiber = {
 	node: Node,
