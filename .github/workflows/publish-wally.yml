@@ -9,7 +9,7 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,6 +24,20 @@ jobs:
 
       - name: Run tests
         run: lune run tests
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set-up rokit
+        uses: CompeyDev/setup-rokit@v0.2.0
 
       - name: Log-in to wally
         run: wally login --token "${{ secrets.WALLY_AUTH_TOKEN }}"
