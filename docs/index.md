@@ -1,5 +1,9 @@
 # Introduction
 
+!!! warning "Warning"
+
+    This documentation is **not** going to be detailed for a while. In this tutorial, I simply provide you with a basic usage example and little explanations. Expect API reference and core concepts to arrive with version `1.0`.
+
 ## What is Rovo?
 
 **Rovo** is a type-safe, declarative UI library for Roblox.
