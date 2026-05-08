@@ -1,4 +1,4 @@
-local Node = require("../src/Node")
+local Node = require("../src/node")
 local Types = require("../src/types")
 local test = require("./test")
 
