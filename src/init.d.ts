@@ -1,8 +1,8 @@
 export declare interface Props {
     [key: string]: any;
 
-    [Rovo.children]: Node[];
-    [Rovo.ref]: Ref<any>;
+    [Rovo.children]?: Node[];
+    [Rovo.ref]?: Ref<any>;
 }
 
 export declare interface Node {
