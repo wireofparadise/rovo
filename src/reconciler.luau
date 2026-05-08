@@ -67,7 +67,29 @@ local function unmount(fiber: Types.Fiber)
 	Renderer.destroy(fiber)
 end
 
-local function reconcile(fiber: Types.Fiber, newNode: Types.Node): Types.Fiber
+local reconcile: (fiber: Types.Fiber, newNode: Types.Node) -> Types.Fiber
+
+local function reconcileChildren(fiber: Types.Fiber, newNode: Types.Node, parent: Instance)
+	local len = math.max(#fiber.children, #newNode.children)
+	local newChildren: Types.Array<Types.Fiber> = {}
+
+	for i = 1, len do
+		local oldChildFiber = fiber.children[i]
+		local newChildNode = newNode.children[i]
+
+		if oldChildFiber and newChildNode then
+			newChildren[i] = reconcile(oldChildFiber, newChildNode)
+		elseif newChildNode then
+			newChildren[i] = Reconciler.mount(newChildNode, parent)
+		elseif oldChildFiber then
+			unmount(oldChildFiber)
+		end
+	end
+
+	fiber.children = newChildren
+end
+
+reconcile = function(fiber: Types.Fiber, newNode: Types.Node): Types.Fiber
 	if fiber.node.className ~= newNode.className then
 		unmount(fiber)
 		Reconciler.mount(newNode, fiber.parent)
@@ -90,7 +112,7 @@ local function reconcile(fiber: Types.Fiber, newNode: Types.Node): Types.Fiber
 
 		return fiber
 	elseif newNode.className == Node.FRAGMENT_CNAME then
-		-- TODO
+		reconcileChildren(fiber, newNode, fiber.parent)
 		return fiber
 	end
 
@@ -98,27 +120,10 @@ local function reconcile(fiber: Types.Fiber, newNode: Types.Node): Types.Fiber
 		Renderer.applyProps(fiber.instance, newNode.props)
 	end
 
+	-- TODO: `fiber.parent` fallback is incorrect logically, but that's a bug that i'll deal with later
+	reconcileChildren(fiber, newNode, fiber.instance or fiber.parent)
+
 	fiber.node = newNode
-
-	local len = math.max(#fiber.children, #newNode.children)
-	local newChildren: Types.Array<Types.Fiber> = {}
-
-	for i = 1, len do
-		local oldChildFiber = fiber.children[i]
-		local newChildNode = newNode.children[i]
-
-		if oldChildFiber and newChildNode then
-			newChildren[i] = reconcile(oldChildFiber, newChildNode)
-		elseif newChildNode then
-			-- TODO: `fiber.parent` fallback is incorrect logically, but that's a bug that i'll deal with later
-			local parent = fiber.instance or fiber.parent
-			newChildren[i] = Reconciler.mount(newChildNode, parent)
-		elseif oldChildFiber then
-			unmount(oldChildFiber)
-		end
-	end
-
-	fiber.children = newChildren
 
 	return fiber
 end
