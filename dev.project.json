@@ -1,0 +1,30 @@
+{
+    "name": "rovo",
+    "tree": {
+        "$className": "DataModel",
+
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+
+            "Packages": {
+                "$className": "Folder",
+
+                "Rovo": {
+                    "$path": "src"
+                }
+            }
+        },
+
+        "StarterPlayer": {
+            "$className": "StarterPlayer",
+
+            "StarterPlayerScripts": {
+                "$className": "StarterPlayerScripts",
+
+                "Client": {
+                    "$path": "dev"
+                }
+            }
+        }
+    }
+}

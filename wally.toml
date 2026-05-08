@@ -1,0 +1,55 @@
+[package]
+name = "wireofparadise/rovo"
+description = "A type-safe, declarative UI library for Roblox."
+version = "0.1.0"
+license = "MIT"
+authors = ["wireofparadise <wireofparadise@gmail.com>"]
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+homepage = "https://wireofparadise.github.io/rovo/"
+repository = "https://github.com/wireofparadise/rovo"
+exclude = [
+    # macOS finder meta
+    ".DS_Store",
+
+    # Git
+    ".git",
+    ".gitignore",
+    ".github",
+
+    # Visual Studio Code settings
+    ".vscode",
+
+    # Documentation
+    "docs",
+    "CONTRIBUTING.md",
+    "mkdocs.yml",
+    "requirements.txt",
+
+    # Language server configuration
+    ".luaurc",
+
+    # npm
+    "node_modules",
+    "package-lock.json",
+    "package.json",
+
+    # Toolchain
+    "rokit.toml",
+    "selene.toml",
+    "sourcemap.json",
+
+    # Rojo builds
+    "*.rbxl",
+    "*.rbxlx",
+    "*.rbxl.lock",
+    "*.rbxlx.lock",
+    "*.rbxm",
+    "*.rbxmx",
+
+    # Packages
+    "*.tgz",
+
+    # TypeScript files
+    "*.ts",
+]

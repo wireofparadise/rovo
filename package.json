@@ -1,0 +1,27 @@
+{
+    "name": "@rbxts/rovo",
+    "author": "wireofparadise <wireofparadise@gmail.com>",
+    "description": "A type-safe, declarative UI library for Roblox.",
+    "version": "0.1.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "homepage": "https://wireofparadise.github.io/rovo/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wireofparadise/rovo.git"
+    },
+    "bugs": {
+        "url": "https://github.com/wireofparadise/rovo/issues"
+    },
+    "license": "MIT",
+    "main": "./lib/init.luau",
+    "types": "./lib/init.d.ts",
+    "files": [
+        "lib/**/*.lua",
+        "lib/**/*.luau",
+        "lib/**/*.d.ts",
+        "LICENSE",
+        "README.md"
+    ]
+}
