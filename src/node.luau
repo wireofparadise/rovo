@@ -35,7 +35,7 @@ end
 
 local function createFragmentNode(children: Types.Array<Types.Node>): Types.Node
 	return {
-		className = COMPONENT_CNAME,
+		className = FRAGMENT_CNAME,
 		props = {},
 		children = children,
 	}
