@@ -23,6 +23,8 @@ function Reconciler.mount(node: Types.Node, parent: Instance): Types.Fiber
 	local fiber = createFiber(node, parent)
 	fiber.isAlive = true
 
+	local children = node.props.Children
+
 	if node.className == Node.COMPONENT_CNAME then
 		Reconciler.currentFiber = fiber
 		local vnode: Types.Node = node.props.component(node.props.props)
@@ -33,8 +35,10 @@ function Reconciler.mount(node: Types.Node, parent: Instance): Types.Fiber
 
 		return fiber
 	elseif node.className == Node.FRAGMENT_CNAME then
-		for _, childNode in ipairs(node.children) do
-			table.insert(fiber.children, Reconciler.mount(childNode, parent))
+		if children then
+			for _, childNode in ipairs(children) do
+				table.insert(fiber.children, Reconciler.mount(childNode, parent))
+			end
 		end
 
 		return fiber
@@ -43,8 +47,10 @@ function Reconciler.mount(node: Types.Node, parent: Instance): Types.Fiber
 	local instance = Renderer.render(node, parent)
 	fiber.instance = instance
 
-	for _, childNode in ipairs(node.children) do
-		table.insert(fiber.children, Reconciler.mount(childNode, instance))
+	if children then
+		for _, childNode in ipairs(children) do
+			table.insert(fiber.children, Reconciler.mount(childNode, instance))
+		end
 	end
 
 	return fiber
@@ -70,12 +76,13 @@ end
 local reconcile: (fiber: Types.Fiber, newNode: Types.Node) -> Types.Fiber
 
 local function reconcileChildren(fiber: Types.Fiber, newNode: Types.Node, parent: Instance)
-	local len = math.max(#fiber.children, #newNode.children)
+	local children: Types.Children = newNode.props.Children or {}
+	local len = math.max(#fiber.children, #children)
 	local newChildren: Types.Array<Types.Fiber> = {}
 
 	for i = 1, len do
 		local oldChildFiber = fiber.children[i]
-		local newChildNode = newNode.children[i]
+		local newChildNode = children[i]
 
 		if oldChildFiber and newChildNode then
 			newChildren[i] = reconcile(oldChildFiber, newChildNode)

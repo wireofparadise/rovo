@@ -7,7 +7,7 @@ export type Node = Types.Node
 export type Props = Types.Props
 export type Ref<T> = Types.Ref<T>
 
-local function create<T>(className: string | Types.Component<T>, props: Props & T): Types.Node
+local function create<T>(className: string | Types.Component, props: Types.Props?): Types.Node
 	if typeof(className) == "function" then
 		return Node.createComponentNode(className, props)
 	else
@@ -24,15 +24,12 @@ local function on(event: string): string
 end
 
 return {
-	children = Node.CHILDREN_PROP,
-	ref = Node.REF_PROP,
-
 	create = create,
 	fragment = Node.createFragmentNode,
 	on = on,
 	mount = mount,
 
 	state = Hooks.state,
-	useRef = Hooks.ref,
+	ref = Hooks.ref,
 	effect = Hooks.effect,
 }

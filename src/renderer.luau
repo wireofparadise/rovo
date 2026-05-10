@@ -44,10 +44,6 @@ local function applyProps(instance: Instance, props: Types.Props)
 	end
 end
 
-local function getRef(props: Types.Props): Types.Ref<unknown>?
-	return props[Node.REF_PROP]
-end
-
 local function attachRef(ref: Types.Ref<unknown>, instance: Instance)
 	ref.current = instance
 end
@@ -61,7 +57,7 @@ local function render(node: Types.Node, parent: Instance): Instance
 	applyProps(instance, node.props)
 	instance.Parent = parent
 
-	local ref = getRef(node.props)
+	local ref = node.props.Ref
 	if ref then
 		attachRef(ref, instance)
 	end
@@ -70,7 +66,7 @@ local function render(node: Types.Node, parent: Instance): Instance
 end
 
 local function destroy(fiber: Types.Fiber)
-	local ref = getRef(fiber.node.props)
+	local ref = fiber.node.props.Ref
 	if ref then
 		detachRef(ref)
 	end

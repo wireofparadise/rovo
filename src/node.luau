@@ -2,47 +2,31 @@ local Types = require("./types")
 
 local COMPONENT_CNAME = "__rovo_component"
 local FRAGMENT_CNAME = "__rovo_fragment"
-local CHILDREN_PROP = "__rovo_children"
-local REF_PROP = "__rovo_ref"
 local CONNECTION_PROP_PREFIX = "__rovo_connection_"
 
 local function createNode(className: string, props: Types.Props?): Types.Node
-	local implicitProps = props or {}
-	local children = implicitProps[CHILDREN_PROP] or {}
-	implicitProps[CHILDREN_PROP] = nil
-
 	return {
 		className = className,
-		props = implicitProps,
-		children = children,
+		props = props or {},
 	}
 end
 
-local function createComponentNode<T>(component: Types.Component<T>, props: Types.Props & T): Types.Node
-	if typeof(props) ~= "table" then
-		error("expected 'props' to be of type 'table'")
-	end
-
-	local children = (props[CHILDREN_PROP] or {}) :: Types.Array<Types.Node>
-	props[CHILDREN_PROP] = nil
-
+local function createComponentNode<T>(component: Types.Component, props: Types.Props?): Types.Node
 	return {
 		className = COMPONENT_CNAME,
 		props = { component = component, props = props },
-		children = children,
 	}
 end
 
 local function createFragmentNode(children: Types.Array<Types.Node>): Types.Node
 	return {
 		className = FRAGMENT_CNAME,
-		props = {},
-		children = children,
+		props = { Children = children },
 	}
 end
 
 local function isReservedProp(propName: string): boolean
-	return propName == CHILDREN_PROP or propName == REF_PROP
+	return propName == "Children" or propName == "Ref"
 end
 
 local function isNode(value: any): boolean
@@ -115,8 +99,6 @@ end
 return {
 	COMPONENT_CNAME = COMPONENT_CNAME,
 	FRAGMENT_CNAME = FRAGMENT_CNAME,
-	CHILDREN_PROP = CHILDREN_PROP,
-	REF_PROP = REF_PROP,
 	CONNECTION_PROP_PREFIX = CONNECTION_PROP_PREFIX,
 
 	createNode = createNode,

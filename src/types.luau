@@ -3,15 +3,19 @@ export type Map<K, V> = { [K]: V }
 
 export type Task = () -> ()
 
-export type Props = Map<string, any>
+export type Props = Map<string, any> & {
+	Children: Children?,
+	Ref: Ref<any>?,
+}
 
 export type Node = {
 	className: string,
 	props: Props,
-	children: Array<Node>,
 }
 
-export type Component<T> = (props: Props & T) -> Node
+export type Children = Array<Node>
+
+export type Component = (props: Props) -> Node
 
 export type Fiber = {
 	node: Node,
