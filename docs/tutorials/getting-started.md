@@ -13,7 +13,7 @@
         Rovo.create("ScreenGui", {
             ResetOnSpawn = false,
 
-            [Rovo.children] = {
+            Children = {
                 Rovo.create("TextLabel", {
                     Text = "Hello, world!",
                     Size = UDim2.fromOffset(200, 50)
@@ -35,7 +35,7 @@
         Rovo.create("ScreenGui", {
             ResetOnSpawn: false,
 
-            [Rovo.children]: [
+            Children: [
                 Rovo.create("TextLabel", {
                     Text: "Hello, world!",
                     Size: UDim2.fromOffset(200, 50)
@@ -97,7 +97,7 @@
 
     local function Counter(props: CounterProps): Rovo.Node
         local count, setCount = Rovo.state(0)
-        local frameRef: Rovo.Ref<Frame?> = Rovo.createRef(nil)
+        local frameRef: Rovo.Ref<Frame?> = Rovo.ref(nil)
 
         Rovo.effect(function()
             print("Count has just changed!")
@@ -111,9 +111,9 @@
             Position = props.Position,
             AnchorPoint = props.AnchorPoint,
 
-            [Rovo.ref] = frameRef,
+            Ref = frameRef,
 
-            [Rovo.children] = {
+            Children = {
                 Rovo.create("UIListLayout", {}),
 
                 Rovo.create("TextLabel", {
@@ -137,7 +137,7 @@
         Rovo.create("ScreenGui", {
             ResetOnSpawn = false,
 
-            [Rovo.children] = {
+            Children = {
                 Rovo.create(Counter, {
                     Position = UDim2.fromScale(0.5, 0.5),
                     AnchorPoint = Vector2.new(0.5, 0.5)
@@ -161,11 +161,11 @@
 
     function Counter(props: CounterProps): Node {
         const [count, setCount] = Rovo.state(0);
-        const frameRef = Rovo.createRef<Frame | undefined>(undefined);
+        const frameRef = Rovo.ref<Frame | undefined>(undefined);
 
         Rovo.effect(() => {
-            print("Count has just changed!")
-            print("By the way, here is a reference to the currently rendered component instance!", frameRef.current)
+            print("Count has just changed!");
+            print("By the way, here is a reference to the currently rendered component instance!", frameRef.current);
         }, [count]);
 
         return Rovo.create("Frame", {
@@ -174,10 +174,9 @@
             AutomaticSize: Enum.AutomaticSize.XY,
             Position: props.Position,
             AnchorPoint: props.AnchorPoint,
+            Ref: frameRef,
 
-            [Rovo.ref]: frameRef,
-
-            [Rovo.children]: [
+            Children: [
                 Rovo.create("UIListLayout", {}),
 
                 Rovo.create("TextLabel", {
@@ -201,7 +200,7 @@
         Rovo.create("ScreenGui", {
             ResetOnSpawn: false,
 
-            [Rovo.children]: [
+            Children: [
                 Rovo.create(Counter, {
                     Position: UDim2.fromScale(0.5, 0.5),
                     AnchorPoint: new Vector2(0.5, 0.5)
